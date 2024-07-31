@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Media/Music Player.png">
+    <script src="https://kit.fontawesome.com/f7a1168041.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+            <img src="Media/The Local Train.png" class="song-img">
+            <h1>The Local Train</h1>
+            <p>(Paras Thakur, Ramit Mehra, Sahil Sarin) & Raman Negi</p>
+            <audio id="song">
+                <source src="Media/The Local Train - Aalas Ka Pedh - Choo Lo (Official Audio).mp3" type="audio/mpeg">
+            </audio>
+            <input type="range" value="0" id="progress">
+            <div class="controls">
+                <div onclick="prevSong()">
+                    <i class="fa-solid fa-backward"></i>
+                </div>
+                <div onclick="playPause()">
+                    <i class="fa-solid fa-play" id="ctrlIcon"></i>
+                </div>
+                <div onclick="nextSong()">
+                    <i class="fa-solid fa-forward"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    let progress = document.getElementById("progress");
+    let song = document.getElementById("song");
+    let ctrlIcon = document.getElementById("ctrlIcon");
+    const songs = [
+        {
+            src: "Media/The Local Train - Aalas Ka Pedh - Choo Lo (Official Audio).mp3",
+            title: "The Local Train",
+            artist: "(Paras Thakur, Ramit Mehra, Sahil Sarin) & Raman Negi",
+            img: "Media/The Local Train.png"
+        },
+        {
+            src: "Media/Main Kabhi Bhoolunga Na Tujhe  Saudebaazi ft.Aakrosh  [Lofi  Slowed  Reverb ] @latenightlofis.mp3",
+            title: "Saudebaazi",
+            artist: "Javed Ali Khan",
+            img: "Media/Main kbhi bhulunga naa tujhe.png"
+        },
+        {
+            src: "Media/Tum Se Hi (SlowedReverb) - @MohitChauhanOfficial   Lyrics  Jab We Met  MoonVibes.mp3",
+            title: "Tum Se Hii",
+            artist: "Mohit Chauhan",
+            img: "Media/Tum Se Hii.png"
+        },
+        {
+            src: "Media/Shayad Lyrics - Love Aaj Kal Ft. Arijit Singh  Kartik  Sara  Arushi  Pritam.mp3",
+            title: "Shayad",
+            artist: "Arijit Singh",
+            img: "Media/Shayad.png"
+        }
+    ];
+    let currentSongIndex = 0;
+    function loadSong(index) {
+        const songData = songs[index];
+        song.src = songData.src;
+        document.querySelector('.song-img').src = songData.img;
+        document.querySelector('.music-player h1').innerText = songData.title;
+        document.querySelector('.music-player p').innerText = songData.artist;
+        song.onloadedmetadata = function() {
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        };
+    }
+    function playPause() {
+        if (ctrlIcon.classList.contains("fa-pause")) {
+            song.pause();
+            ctrlIcon.classList.remove("fa-pause");
+            ctrlIcon.classList.add("fa-play");
+        } else {
+            song.play();
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+        }
+    }
+    function nextSong() {
+        if (currentSongIndex < songs.length - 1) {
+            currentSongIndex++;
+            loadSong(currentSongIndex);
+            song.play();
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+        }
+    }
+    function prevSong() {
+        if (currentSongIndex > 0) {
+            currentSongIndex--;
+            loadSong(currentSongIndex);
+            song.play();
+            ctrlIcon.classList.add("fa-pause");
+            ctrlIcon.classList.remove("fa-play");
+        }
+    }
+    song.onloadedmetadata = function() {
+        progress.max = song.duration;
+        progress.value = song.currentTime;
+    };
+    song.addEventListener('ended', () => {
+        if (currentSongIndex < songs.length - 1) {
+            nextSong();
+        } else {
+            ctrlIcon.classList.remove("fa-pause");
+            ctrlIcon.classList.add("fa-play");
+        }
+    });
+    setInterval(() => {
+        progress.value = song.currentTime;
+    }, 500);
+    progress.onchange = function() {
+        song.play();
+        song.currentTime = progress.value;
+        ctrlIcon.classList.add("fa-pause");
+        ctrlIcon.classList.remove("fa-play");
+    };
+    loadSong(currentSongIndex);
+    </script>
+</body>
+</html>
