@@ -105,7 +105,9 @@
             img: "Media/Shayad.png"
         }
     ];
-    let currentSongIndex = 0;
+    let currentSongIndex = localStorage.getItem('currentSongIndex') ? parseInt(localStorage.getItem('currentSongIndex')) : 0;
+    let currentTime = localStorage.getItem('currentTime') ? parseFloat(localStorage.getItem('currentTime')) : 0;
+
     function loadSong(index) {
         const songData = songs[index];
         song.src = songData.src;
@@ -114,9 +116,11 @@
         document.querySelector('.music-player p').innerText = songData.artist;
         song.onloadedmetadata = function() {
             progress.max = song.duration;
-            progress.value = song.currentTime;
+            progress.value = currentTime;
+            song.currentTime = currentTime;
         };
     }
+
     function playPause() {
         if (ctrlIcon.classList.contains("fa-pause")) {
             song.pause();
@@ -128,6 +132,7 @@
             ctrlIcon.classList.remove("fa-play");
         }
     }
+
     function nextSong() {
         if (currentSongIndex < songs.length - 1) {
             currentSongIndex++;
@@ -139,6 +144,7 @@
         ctrlIcon.classList.add("fa-pause");
         ctrlIcon.classList.remove("fa-play");
     }
+
     function prevSong() {
         if (currentSongIndex > 0) {
             currentSongIndex--;
@@ -150,10 +156,12 @@
         ctrlIcon.classList.add("fa-pause");
         ctrlIcon.classList.remove("fa-play");
     }
+
     song.onloadedmetadata = function() {
         progress.max = song.duration;
         progress.value = song.currentTime;
     };
+
     song.addEventListener('ended', () => {
         if (currentSongIndex < songs.length - 1) {
             nextSong();
@@ -162,15 +170,24 @@
             ctrlIcon.classList.add("fa-play");
         }
     });
+
     setInterval(() => {
         progress.value = song.currentTime;
+        localStorage.setItem('currentTime', song.currentTime);
     }, 500);
+
     progress.onchange = function() {
         song.play();
         song.currentTime = progress.value;
         ctrlIcon.classList.add("fa-pause");
         ctrlIcon.classList.remove("fa-play");
     };
+
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('currentSongIndex', currentSongIndex);
+        localStorage.setItem('currentTime', song.currentTime);
+    });
+
     loadSong(currentSongIndex);
     </script>
 </body>
