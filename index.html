@@ -139,6 +139,7 @@ function nextSong() {
     } else {
         currentSongIndex = 0;
     }
+    currentTime = 0; // Reset currentTime for the next song
     loadSong(currentSongIndex);
     song.play();
     ctrlIcon.classList.add("fa-pause");
@@ -151,6 +152,7 @@ function prevSong() {
     } else {
         currentSongIndex = songs.length - 1;
     }
+    currentTime = 0; // Reset currentTime for the previous song
     loadSong(currentSongIndex);
     song.play();
     ctrlIcon.classList.add("fa-pause");
