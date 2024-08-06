@@ -40,143 +40,165 @@
         </div>
     </div>
     <script>
-    let progress = document.getElementById("progress");
-    let song = document.getElementById("song");
-    let ctrlIcon = document.getElementById("ctrlIcon");
-    const songs = [
-        {
-            src: "Media/The Local Train - Aalas Ka Pedh - Choo Lo (Official Audio).mp3",
-            title: "The Local Train",
-            artist: "(Paras Thakur, Ramit Mehra, Sahil Sarin) & Raman Negi",
-            img: "Media/The Local Train.png"
-        },
-        {
-            src: "Media/Oo Sajni Ree.mp3",
-            title: "Oo Sajni Ree",
-            artist: "Arijit Singh",
-            img: "Media/Sajni Ree.webp"
-        },
-        {
-            src: "Media/Anuv Jain - HUSN (Lyrics).mp3",
-            title: "Husn",
-            artist: "Anuv Jain",
-            img: "Media/Husn.png"
-        },
-        {
-            src: "Media/Main Kabhi Bhoolunga Na Tujhe  Saudebaazi ft.Aakrosh  [Lofi  Slowed  Reverb ] @latenightlofis.mp3",
-            title: "Saudebaazi",
-            artist: "Javed Ali Khan",
-            img: "Media/Main kbhi bhulunga naa tujhe.png"
-        },
-        {
-            src: "Media/Ek Din Aap Yun [ Slowed  Reverb ]  90's songs.mp3",
-            title: "Ek Din App",
-            artist: "Kumar Sanu",
-            img: "Media/Ek Din App.png"
-        },
-        {
-            src: "Media/Tum Se Hi (SlowedReverb) - @MohitChauhanOfficial   Lyrics  Jab We Met  MoonVibes.mp3",
-            title: "Tum Se Hii",
-            artist: "Mohit Chauhan",
-            img: "Media/Tum Se Hii.png"
-        },
-        {
-            src: "Media/Luka Chuppi [SlowedReverb]-Rang De Basanti  Textaudio Lyrics.mp3",
-            title: "Luka Chuppi",
-            artist: "Lata Mangeshkar",
-            img: "Media/Luka Chuppi.png"
-        },
-        {
-            src: "Media/Iktara  - Wake Up Sid  [slowed  reverb].mp3",
-            title: "Iktara",
-            artist: "Kavita Seth",
-            img: "Media/Iktara.png"
-        },
-        {
-            src: "Media/Hawayein Lyric Video - Jab Harry Met Sejal Shah Rukh Khan, AnushkaArijit SinghPritam.mp3",
-            title: "Hawayein",
-            artist: "Arijit Singh",
-            img: "Media/Hawayein.png"
-        },
-        {
-            src: "Media/Shayad Lyrics - Love Aaj Kal Ft. Arijit Singh  Kartik  Sara  Arushi  Pritam.mp3",
-            title: "Shayad",
-            artist: "Arijit Singh",
-            img: "Media/Shayad.png"
-        }
-    ];
-    let currentSongIndex = localStorage.getItem('currentSongIndex') ? parseInt(localStorage.getItem('currentSongIndex')) : 0;
-    let currentTime = localStorage.getItem('currentTime') ? parseFloat(localStorage.getItem('currentTime')) : 0;
-    function loadSong(index) {
-        const songData = songs[index];
-        song.src = songData.src;
-        document.querySelector('.song-img').src = songData.img;
-        document.querySelector('.music-player h1').innerText = songData.title;
-        document.querySelector('.music-player p').innerText = songData.artist;
-        song.onloadedmetadata = function() {
-            progress.max = song.duration;
-            progress.value = currentTime;
-            song.currentTime = currentTime;
-        };
+let progress = document.getElementById("progress");
+let song = document.getElementById("song");
+let ctrlIcon = document.getElementById("ctrlIcon");
+const songs = [
+    {
+        src: "Media/The Local Train - Aalas Ka Pedh - Choo Lo (Official Audio).mp3",
+        title: "The Local Train",
+        artist: "(Paras Thakur, Ramit Mehra, Sahil Sarin) & Raman Negi",
+        img: "Media/The Local Train.png"
+    },
+    {
+        src: "Media/Oo Sajni Ree.mp3",
+        title: "Oo Sajni Ree",
+        artist: "Arijit Singh",
+        img: "Media/Sajni Ree.webp"
+    },
+    {
+        src: "Media/Anuv Jain - HUSN (Lyrics).mp3",
+        title: "Husn",
+        artist: "Anuv Jain",
+        img: "Media/Husn.png"
+    },
+    {
+        src: "Media/Main Kabhi Bhoolunga Na Tujhe  Saudebaazi ft.Aakrosh  [Lofi  Slowed  Reverb ] @latenightlofis.mp3",
+        title: "Saudebaazi",
+        artist: "Javed Ali Khan",
+        img: "Media/Main kbhi bhulunga naa tujhe.png"
+    },
+    {
+        src: "Media/Ek Din Aap Yun [ Slowed  Reverb ]  90's songs.mp3",
+        title: "Ek Din App",
+        artist: "Kumar Sanu",
+        img: "Media/Ek Din App.png"
+    },
+    {
+        src: "Media/Tum Se Hi (SlowedReverb) - @MohitChauhanOfficial   Lyrics  Jab We Met  MoonVibes.mp3",
+        title: "Tum Se Hii",
+        artist: "Mohit Chauhan",
+        img: "Media/Tum Se Hii.png"
+    },
+    {
+        src: "Media/Luka Chuppi [SlowedReverb]-Rang De Basanti  Textaudio Lyrics.mp3",
+        title: "Luka Chuppi",
+        artist: "Lata Mangeshkar",
+        img: "Media/Luka Chuppi.png"
+    },
+    {
+        src: "Media/Iktara  - Wake Up Sid  [slowed  reverb].mp3",
+        title: "Iktara",
+        artist: "Kavita Seth",
+        img: "Media/Iktara.png"
+    },
+    {
+        src: "Media/Hawayein Lyric Video - Jab Harry Met Sejal Shah Rukh Khan, AnushkaArijit SinghPritam.mp3",
+        title: "Hawayein",
+        artist: "Arijit Singh",
+        img: "Media/Hawayein.png"
+    },
+    {
+        src: "Media/Shayad Lyrics - Love Aaj Kal Ft. Arijit Singh  Kartik  Sara  Arushi  Pritam.mp3",
+        title: "Shayad",
+        artist: "Arijit Singh",
+        img: "Media/Shayad.png"
     }
-    function playPause() {
-        if (ctrlIcon.classList.contains("fa-pause")) {
-            song.pause();
-            ctrlIcon.classList.remove("fa-pause");
-            ctrlIcon.classList.add("fa-play");
-        } else {
-            song.play();
-            ctrlIcon.classList.add("fa-pause");
-            ctrlIcon.classList.remove("fa-play");
-        }
-    }
-    function nextSong() {
-        if (currentSongIndex < songs.length - 1) {
-            currentSongIndex++;
-        } else {
-            currentSongIndex = 0;
-        }
-        loadSong(currentSongIndex);
-        song.play();
-        ctrlIcon.classList.add("fa-pause");
-        ctrlIcon.classList.remove("fa-play");
-    }
-    function prevSong() {
-        if (currentSongIndex > 0) {
-            currentSongIndex--;
-            loadSong(currentSongIndex);
-            song.play();
-            ctrlIcon.classList.add("fa-pause");
-            ctrlIcon.classList.remove("fa-play");
-        }
-    }
+];
+let currentSongIndex = localStorage.getItem('currentSongIndex') ? parseInt(localStorage.getItem('currentSongIndex')) : 0;
+let currentTime = localStorage.getItem('currentTime') ? parseFloat(localStorage.getItem('currentTime')) : 0;
+
+function loadSong(index) {
+    const songData = songs[index];
+    song.src = songData.src;
+    document.querySelector('.song-img').src = songData.img;
+    document.querySelector('.music-player h1').innerText = songData.title;
+    document.querySelector('.music-player p').innerText = songData.artist;
     song.onloadedmetadata = function() {
         progress.max = song.duration;
-        progress.value = song.currentTime;
+        progress.value = currentTime;
+        song.currentTime = currentTime;
     };
-    song.addEventListener('ended', () => {
-        if (currentSongIndex < songs.length - 1) {
-            nextSong();
-        } else {
-            ctrlIcon.classList.remove("fa-pause");
-            ctrlIcon.classList.add("fa-play");
-        }
-    });
-    setInterval(() => {
-        progress.value = song.currentTime;
-        localStorage.setItem('currentTime', song.currentTime);
-    }, 500);
-    progress.onchange = function() {
+}
+
+function playPause() {
+    if (ctrlIcon.classList.contains("fa-pause")) {
+        song.pause();
+        ctrlIcon.classList.remove("fa-pause");
+        ctrlIcon.classList.add("fa-play");
+    } else {
         song.play();
-        song.currentTime = progress.value;
         ctrlIcon.classList.add("fa-pause");
         ctrlIcon.classList.remove("fa-play");
-    };
-    window.addEventListener('beforeunload', () => {
-        localStorage.setItem('currentSongIndex', currentSongIndex);
-        localStorage.setItem('currentTime', song.currentTime);
-    });
+    }
+}
+
+function nextSong() {
+    if (currentSongIndex < songs.length - 1) {
+        currentSongIndex++;
+    } else {
+        currentSongIndex = 0;
+    }
     loadSong(currentSongIndex);
-    </script>
+    song.play();
+    ctrlIcon.classList.add("fa-pause");
+    ctrlIcon.classList.remove("fa-play");
+}
+
+function prevSong() {
+    if (currentSongIndex > 0) {
+        currentSongIndex--;
+    } else {
+        currentSongIndex = songs.length - 1;
+    }
+    loadSong(currentSongIndex);
+    song.play();
+    ctrlIcon.classList.add("fa-pause");
+    ctrlIcon.classList.remove("fa-play");
+}
+
+song.onloadedmetadata = function() {
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+};
+
+song.addEventListener('pause', () => {
+    ctrlIcon.classList.remove("fa-pause");
+    ctrlIcon.classList.add("fa-play");
+});
+
+song.addEventListener('play', () => {
+    ctrlIcon.classList.add("fa-pause");
+    ctrlIcon.classList.remove("fa-play");
+});
+
+song.addEventListener('ended', () => {
+    if (currentSongIndex < songs.length - 1) {
+        nextSong();
+    } else {
+        ctrlIcon.classList.remove("fa-pause");
+        ctrlIcon.classList.add("fa-play");
+    }
+});
+
+setInterval(() => {
+    progress.value = song.currentTime;
+    localStorage.setItem('currentTime', song.currentTime);
+}, 500);
+
+progress.onchange = function() {
+    song.play();
+    song.currentTime = progress.value;
+    ctrlIcon.classList.add("fa-pause");
+    ctrlIcon.classList.remove("fa-play");
+};
+
+window.addEventListener('beforeunload', () => {
+    localStorage.setItem('currentSongIndex', currentSongIndex);
+    localStorage.setItem('currentTime', song.currentTime);
+});
+
+loadSong(currentSongIndex);
+</script>
 </body>
 </html>
