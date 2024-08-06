@@ -107,7 +107,6 @@ const songs = [
 ];
 let currentSongIndex = localStorage.getItem('currentSongIndex') ? parseInt(localStorage.getItem('currentSongIndex')) : 0;
 let currentTime = localStorage.getItem('currentTime') ? parseFloat(localStorage.getItem('currentTime')) : 0;
-
 function loadSong(index) {
     const songData = songs[index];
     song.src = songData.src;
@@ -120,7 +119,6 @@ function loadSong(index) {
         song.currentTime = currentTime;
     };
 }
-
 function playPause() {
     if (ctrlIcon.classList.contains("fa-pause")) {
         song.pause();
@@ -132,12 +130,11 @@ function playPause() {
         ctrlIcon.classList.remove("fa-play");
     }
 }
-
 function nextSong() {
     if (currentSongIndex < songs.length - 1) {
         currentSongIndex++;
     } else {
-        currentSongIndex = 0;
+        currentSongIndex = 0; // Loop back to the first song
     }
     currentTime = 0; // Reset currentTime for the next song
     loadSong(currentSongIndex);
@@ -145,7 +142,6 @@ function nextSong() {
     ctrlIcon.classList.add("fa-pause");
     ctrlIcon.classList.remove("fa-play");
 }
-
 function prevSong() {
     if (currentSongIndex > 0) {
         currentSongIndex--;
@@ -158,48 +154,35 @@ function prevSong() {
     ctrlIcon.classList.add("fa-pause");
     ctrlIcon.classList.remove("fa-play");
 }
-
 song.onloadedmetadata = function() {
     progress.max = song.duration;
     progress.value = song.currentTime;
 };
-
 song.addEventListener('pause', () => {
     ctrlIcon.classList.remove("fa-pause");
     ctrlIcon.classList.add("fa-play");
 });
-
 song.addEventListener('play', () => {
     ctrlIcon.classList.add("fa-pause");
     ctrlIcon.classList.remove("fa-play");
 });
-
 song.addEventListener('ended', () => {
-    if (currentSongIndex < songs.length - 1) {
-        nextSong();
-    } else {
-        ctrlIcon.classList.remove("fa-pause");
-        ctrlIcon.classList.add("fa-play");
-    }
+    nextSong(); // Automatically play the next song, looping back to the first song if necessary
 });
-
 setInterval(() => {
     progress.value = song.currentTime;
     localStorage.setItem('currentTime', song.currentTime);
 }, 500);
-
 progress.onchange = function() {
     song.play();
     song.currentTime = progress.value;
     ctrlIcon.classList.add("fa-pause");
     ctrlIcon.classList.remove("fa-play");
 };
-
 window.addEventListener('beforeunload', () => {
     localStorage.setItem('currentSongIndex', currentSongIndex);
     localStorage.setItem('currentTime', song.currentTime);
 });
-
 loadSong(currentSongIndex);
 </script>
 </body>
