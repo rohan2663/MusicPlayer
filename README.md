@@ -5,9 +5,7 @@ Welcome to my **Media Player** project! This is a simple media player built usin
 ## 🚀 Features
 - 🎧 **Play, Pause, Stop** audio files
 - ⏩ **Next** and ⏪ **Previous** track functionality
-- 🎛️ **Volume** control and **mute** option
 - 🕒 **Seek bar** to track the current playtime of the audio
-- 📱 **Responsive design** for mobile and desktop
 
 ## 💻 Tech Stack
 - **HTML5**: For the structure of the app
